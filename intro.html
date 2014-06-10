@@ -1,0 +1,277 @@
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>D3.js</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" id="theme">
+    <link rel="stylesheet" href="lib/revealjs/css/reveal.min.css">
+    <link rel="stylesheet" href="lib/revealjs/css/theme/beige.css" id="theme">
+    <!-- For syntax highlighting -->
+    <link rel="stylesheet" href="lib/revealjs/lib/css/zenburn.css">
+    <link rel="stylesheet" href="css/dc.css">
+
+    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+
+    <script>
+      document.write( '<link rel="stylesheet" href="lib/revealjs/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+    </script>
+    <script type="text/javascript" src="lib/jquery/jquery-1.9.1.min.js"></script>
+    <script src="lib/d3/d3.min.js"></script>
+    <script src="lib/crossfilter.js"></script>
+    <script src="lib/dc.js"></script>
+    <script src="lib/nvd3/nv.d3.js"></script>
+    <script type="text/javascript" src="lib/slick/slick.min.js"></script>
+	  <link rel="stylesheet" href="lib/slick/slick.css">
+
+    <!--[if lt IE 9]>
+    <script src="lib/js/html5shiv.js"></script>
+    <
+    ![endif]-->
+    <style>
+      .reveal .slides{
+        text-align: left;
+      }
+
+      #slide1 {
+        position: absolute;
+        top: 300px;
+      }
+
+        a.reset{
+          font-size: small;
+        }
+        #pie {
+          width: 300px;
+          height:300px;
+          float:left;
+        }
+        #graph {
+          width: 300px;
+          height:300px;
+          float:left;
+        }
+        #bar {
+          width:300px;
+          height:300px;
+          float:left;
+        }
+        .raw {
+          width:100%;
+        }
+        #rawtext {
+          font-size: 75%;
+        }
+
+        .discreteBar {
+          fill: "black"
+        }
+        .nv-y text{
+          display: none;
+        }
+
+        .x-axis-label {
+          font-size: 15px;
+        }
+        .y-axis-label {
+          font-size: 15px;
+        }
+
+        </style>
+
+        <script>
+      $(document).keypress(function(ev) {
+        var indices = Reveal.getIndices();
+        var toSlick = undefined;
+
+        if (indices.h == 2 && indices.v == 1){
+          console.log("slick 3");
+          toSlick = $('#slick-pros');
+        }
+
+        if (toSlick == undefined) {
+          console.log('toSlick undef');
+          return
+        }
+        if (ev.which === 224 ){
+          toSlick.slickNext();
+        }
+        if (ev.which === 231 ){
+          toSlick.slickPrev();         
+        }
+      });
+        </script>
+  </head>
+
+  <body>
+
+    <div class="reveal">
+
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+
+        <section data-markdown>
+        <script type="text/template">
+          # D3.js ( & sons )
+        </script>
+        </section>
+
+        <section>
+        Data driven document
+        </section>
+
+        <section>
+        <section>
+        <h2>Quick Overview</h2>
+
+        <ul>
+          <li>Javascript visualization library</li>
+          <li><a href="http://d3js.org/">http://d3js.org/</a></li>
+          <li>Pletoric use cases / example :
+          <ul>
+            <li><a href="http://bl.ocks.org/mbostock">http://bl.ocks.org/mbostock</a></li>
+            <li><a href="http://christopheviau.com/d3list/gallery.html">http://christopheviau.com/d3list/gallery.html</a></li>
+          </ul>
+          </li>
+          </ul>
+        </section>
+        <section>
+        <h2>One example</h2>
+         <a href="http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html">Four Ways to Slice Obama’s 2013 Budget Proposal</a>
+        </section>
+        </section>
+
+        <section>
+        <section>
+          <h1>D3.js pros and cons</h1>
+        </section>
+        <section>
+        <div>
+          <div id="slick-pros">
+            <div style="height:600px">
+              <h2>D3.js pros</h2>
+              <ul>
+                <li>General purpose visualization library </li>
+                <li>Interactivity and dynamicity </li>
+                <li>Basic maths & layout algorithms</li>
+                <li>Run in the browser</li>
+              </ul>
+            </div>
+            <div style="height:600px">
+              <h2>D3.js pros</h2>
+              In a scientific (or not) context : </br>
+              Explanatory visualization : <br/>
+              <ul> 
+                <li><a href="http://andrewyuan.github.io/EDAV-project.html">WC2014</a></li>
+                <li><a href="http://bl.ocks.org/mbostock/dbb02448b0f93e4c82c3">Poisson disc</a></li>
+              </ul>
+            </div>
+          </div>
+          <script>
+        $(document).ready(function(){
+          $('#slick-pros').slick({
+            vertical: true,
+            dots: true
+          });
+        })
+          </script>
+
+          <div id="slide1">
+            <div id="graph"><h5>circle</h5></div>
+            <div id="pie"><h5>color</h5><svg height=500px></svg></div>
+            <div id="bar"><h5>radius</h5><svg height=500px></svg></div>
+            <div class="raw"><h5>raw (last)</h5><div id="rawtext"></div></div>
+            <script src="lib/slides/slide1.js"></script>
+          </div>
+        </div>
+        <aside class="notes">
+          ref : http://ireneros.com/conf/nicar/introduction-to-d3.html#3
+        </aside>
+        </section>
+
+
+        <section data-markdown>
+        <script type="text/template">
+          # D3.js cons
+          
+          - No predefined visualization 
+          - No backward compatibility
+          - "Low" level
+          - Size of the input
+          - multidimensional charting is not easy
+          - Designing visualization is a full time job.
+
+        </script>
+        </section>
+
+        </section>
+
+        <section>
+        <h1>Sons of D3.js *</h1>
+        <h5>*  not exhaustive</h5>
+        
+        <ul>
+          <li>Reusable charts : <a href="http://nvd3.org/">nvd3</a></li>
+          <li>Exploratory and multidimensional visualization : <a href="http://dc-js.github.io/dc.js/">dc.js</a></li>  
+        </ul>
+        
+        <div id="dc">
+		      <div class="row">
+            <div id="fluctuation-chart"><small>Submission time</small><br/></div>
+		        <div id="images-chart">
+              <div><small>Image Type</small>
+		            <a class="reset" href="javascript:imagesChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+		          </div>
+		        </div>
+            <div>
+              <div id="sites-chart"><small>Site</small></div>
+            <a class="reset" href="javascript:sitesChart.filterAll();dc.redrawAll();" style="display: none;">reset</a>
+            </div>
+
+          </div>
+        </div>
+
+        <script src="lib/slides/globals.js"></script>
+        <script src="lib/slides/slide2.js"></script>
+
+        </section>
+
+        <section data-markdown>
+        <script type="text/template">
+          # Tutorial
+
+          ## d3.js : the basics
+
+        </script>
+        </section>
+
+                </section>
+
+
+        <script src="lib/revealjs/lib/js/head.min.js"></script>
+        <script src="lib/revealjs/js/reveal.min.js"></script>
+
+        <script>
+
+          Reveal.initialize({
+            controls: true,
+            progress: true,
+            history: true,
+            center: true,
+            loop: true,
+            theme: Reveal.getQueryHash().theme,
+            transition: 'linear',
+            margin: 0,
+
+            dependencies: [
+            { src: 'lib/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+            { src: 'lib/revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'lib/revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+            { src: 'lib/revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+            { src: 'lib/revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+            { src: 'lib/revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+            ]
+          });
+        </script>
+
+      </body>
+    </html>

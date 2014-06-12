@@ -7,8 +7,30 @@
     </head>
     <body>
       <h1>Tuto 1 : DOM/SVG manipulations</h1>
+      <div class="container">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+
       <script type="text/javascript">
-          // Javascript and D3js code here
+        var myDatas = [1,2,3,4,5];
+        var container = d3.select(".container");
+        var updateSel = container.selectAll("div")
+        .data(myDatas);
+
+        //update existing div
+        updateSel.text(function(d, i) {
+            return i + ',' + d;
+            });
+
+// add new divs
+        var newElements = updateSel.enter()
+          .append("div")
+          .text(function(d,i) {
+              return i + ',' + d;
+            });
+
       </script>
     </body>
 </html>

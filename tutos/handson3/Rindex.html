@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>D3js</title>
+  <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+  <style>
+  .axis text {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  </style>
+</head>
+<body>
+  <div>
+  <h1>GDP and CO2</h1>
+  This is a scatter plot where each circle represents one country in 1980 where
+  <ul>
+    <li>The y-axis is the GDP per capita (log scale)</li>
+    <li>The x-axis is the CO2 produced per capita (log scale)</li>
+    <li>The radius of the circle represents the overall production of CO2</li>
+  </ul>
+  Goal : Make the graph looks great ! :
+  <ol>
+    <li>Assign colors to each circle</li>
+    <li>add x-axis and y-axis</li>
+    <li>Add some interactions with the circles</li>
+    <li>Animate it ! from 1980 to 2010.</li>
+  </ol>
+  </div>
+  <script type="text/javascript">
+  var margin = {top: 50, right: 50, bottom: 50, left: 50},
+  width = 600 - margin.left - margin.right,
+  height = 400 - margin.top - margin.bottom;
+
+
+  var svg = d3.select("body").append("svg")
+  // container for the whole graph (axis + scatter)
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.right + margin.bottom);
+  // container for the content
+  var content = svg.append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var tooltip = d3.select('body')
+    .append('div')
+    .style('opacity', 0);
+
+  var xScale = d3.scale.log()
+  .domain([100, 50000])
+  .range([0, width]);
+
+  var yScale  = d3.scale.log()
+  .domain([1,58])
+  .range([height, 0]);
+
+  var rScale = d3.scale.sqrt()
+  .domain([0,4721171])
+  .range([0,30]);
+
+  var xAxis = d3.svg.axis()
+  .scale(xScale)
+  .orient("bottom")
+  .ticks(10, ",.1s")
+
+  var yAxis = d3.svg.axis()
+  .scale(yScale)
+  .orient("left")
+  .ticks(10, ",.1s")
+
+  var colors = d3.scale.category20();
+  var cScale = d3.scale.ordinal()
+  .range(colors.range());
+
+  var datas;
+  d3.csv('../../datas/data.csv', function(d){
+    datas = d;
+
+    var countries = datas.map(function(d){return d.county});
+    cScale.domain(countries);
+
+    var updateSel = content.selectAll("circle").data(datas);
+    updateSel.enter()
+    .append("circle")
+    .attr("cx", function(d){return xScale(d.gdppc1980)})
+    .attr("cy", function(d){return yScale(d.co2pc1980)})
+    .attr("r", function(d){return rScale(d.co21980)})
+    .style("fill", function(d){return cScale(d.country)})
+    .style("opacity", 0.7)
+    .style("stroke", "blue")
+    .style("stroke-opacity", 0.4)
+    .on("mouseover", function(d){
+      d3.select(this)
+        .style("stroke", "red")
+        .style("stroke-opacity", 1)
+        .style("opacity", 1)
+
+      content
+        .append("text")
+        .attr("id", "tooltip-" + d.country.replace(/ /g, ""))
+        .attr("fill", "blue")
+        // .attr("x", xScale(d.gdppc1980) - 30)
+        // .attr("y", yScale(d.co2pc1980) - 30)
+        .attr("x", d3.mouse(this)[0]-10)
+        .attr("y", d3.mouse(this)[1]-10)
+        .text(d.country)
+    })
+    .on("mouseout", function(d) {
+      d3.select(this)
+      .style("opacity", 0.7)
+      .style("stroke", "blue")
+      .style("stroke-opacity", 0.4)
+
+      d3.selectAll("#tooltip-" + d.country.replace(/ /g, "")).remove();
+
+    })
+
+    content.append("g")
+    .attr("transform", "translate(0," + (height) + ")")
+    .attr("class","x axis").call(xAxis);
+
+    content.append("g")
+    .attr("class", "y axis").call(yAxis);
+
+    // add legend
+    content.append("g")
+    .attr("transform", "translate(" + (width/2) + "," + (height + 0.6*margin.bottom) + ")")
+    .append("text")
+    .text("CO2 per capita (log scale)");
+
+    // add legend
+    content.append("g")
+    .attr("transform", "translate(" + (-0.6*margin.left) + "," + (height/2) + ")rotate(-90)")
+    .append("text")
+    .text("GDP per capita (log scale)");
+  });
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3js</title>
+        <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+    </head>
+    <body>
+      <h1>Tuto 2-3 : Data binding</h1>
+      <p>
+        The data [1,2,3,4,5] is bound to the three divs.
+        The 2 missing divs can be created and more using the enter selection.
+      </p>
+      <p>
+        The content of the div is updated with data and the index in the data array.
+      </p>
+      <div class="container">
+        <div>div1</div>
+        <div>div2</div>
+        <div>div3</div>
+      </div>
+    </body>
+    <script type="text/javascript">
+      var myDatas = [1,2,3,4,5];
+      var container = d3.select(".container");
+
+      // get the update selection
+      var updateSel = container.selectAll("div")
+      .data(myDatas);
+
+      //update existing div
+      updateSel.text(function(d, i) {
+        return i + ',' + d;
+      });
+
+      // add new divs
+      var newElements = updateSel.enter()
+        .append("div")
+        .text(function(d,i) {
+          // for debug purpose
+          console.log(i);
+          console.log(d);
+          return i + ',' + d;
+        });
+        
+    </script>
+
+</html>

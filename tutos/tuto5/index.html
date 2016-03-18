@@ -23,7 +23,7 @@
           console.log(tot);
 
           var sorted = arr.sort(descendingPop);
-          console.log(sorted);  
+          console.log(sorted);
 
           // the n most populated city in France 
           var n = 25;
@@ -36,12 +36,12 @@
 
           var yScale = d3.scale.linear().domain([0, maxPop]).range([0,h]);
 
-          //create svg tag 
+          //create svg tag
           var svg = d3.selectAll('.container')
                       .append('svg')
                       .attr("width", w)
                       .attr("height", h);
-        
+
           svg.selectAll('rect')
             .data(cities)
             .enter()
@@ -55,7 +55,7 @@
             .attr("y", function(d,i){return h - yScale(d.population_2010)})
             .attr("height", function(d){ return yScale(d.population_2010)});
 
-        
+
         }); //d3.csv
 
         </script>

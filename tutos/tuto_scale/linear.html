@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3js</title>
+        <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+        <style>
+        .axis text {
+          font: 10px sans-serif;
+        }
+
+        .axis path,
+        .axis line {
+          fill: none;
+          stroke: #000;
+          shape-rendering: crispEdges;
+        }
+        </style>
+    </head>
+    <body>
+      <h1> Linear scale </h1>
+      <p>
+        <ul>
+          <li>Input datas : [1,4,10,5,30,25,40]</li>
+          <li>SVG is 500px width</li>
+          <li>input domains : [1,40] is transformed to [0, 500] using a linear scale to fill the SVG width</li>
+      </p>
+
+    </body>
+    <script type="text/javascript">
+        var WIDTH = 500;
+        var HEIGHT = 100;
+        var datas = [1,4,10,5,30,25,40];
+        var xScale = d3.scale.linear().domain([1, 40]).range([0,WIDTH]);
+        var svg = d3.select('body')
+          .append('svg')
+          .attr('width', WIDTH)
+          .attr("height", HEIGHT);
+
+        svg.selectAll('circle')
+           .data(datas)
+           .enter()
+           .append('circle')
+           .attr("cx", function(d){
+             return xScale(d)
+            })
+           .attr("cy", HEIGHT/2)
+           .attr("r", 5)
+           .style("fill", "red")
+           .style("stroke", "blue")
+           .style("opacity", 0.6);
+
+        // add an axis for illustration purpose.
+        var xAxis = d3.svg.axis().scale(xScale);
+        svg.append("g")
+          .attr("transform", "translate(0," + (HEIGHT/2) + ")")
+          .attr("class","x axis")
+          .call(xAxis);
+            </script>
+
+</html>

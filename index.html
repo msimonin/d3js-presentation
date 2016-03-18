@@ -1,86 +1,901 @@
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
+<head>
+  <meta charset="utf-8">
 
-    <title>D3.js</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css" id="theme">
-    <link rel="stylesheet" href="lib/revealjs/css/reveal.min.css">
-    <link rel="stylesheet" href="lib/revealjs/css/theme/beige.css" id="theme">
-    <!-- For syntax highlighting -->
-    <link rel="stylesheet" href="lib/revealjs/lib/css/zenburn.css">
-    <link rel="stylesheet" href="css/dc.css">
+  <title>D3.js</title>
+  <link rel="stylesheet" href="css/bootstrap.min.css" id="theme">
+  <link rel="stylesheet" href="lib/revealjs/css/reveal.min.css">
+  <link rel="stylesheet" href="lib/revealjs/css/theme/beige.css" id="theme">
+  <!-- For syntax highlighting -->
+  <link rel="stylesheet" href="lib/revealjs/lib/css/zenburn.css">
+  <link rel="stylesheet" href="css/dc.css">
 
-    <!-- If the query includes 'print-pdf', use the PDF print sheet -->
+  <!-- If the query includes 'print-pdf', use the PDF print sheet -->
 
-    <script>
-      document.write( '<link rel="stylesheet" href="lib/revealjs/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
-    </script>
-    <script type="text/javascript" src="lib/jquery/jquery-1.9.1.min.js"></script>
-    <script src="lib/d3/d3.min.js"></script>
-    <script src="lib/crossfilter.js"></script>
-    <script src="lib/dc.js"></script>
-    <script src="lib/nvd3/nv.d3.js"></script>
-    <script type="text/javascript" src="lib/slick/slick.min.js"></script>
-    <link rel="stylesheet" href="lib/slick/slick.css">
+  <script>
+  document.write( '<link rel="stylesheet" href="lib/revealjs/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+  </script>
+  <script src="lib/d3/d3.min.js"></script>
 
-    <!--[if lt IE 9]>
-    <script src="lib/js/html5shiv.js"></script>
-    <
-    ![endif]-->
-    <style>
-      .reveal .slides{
-        text-align: left;
-      }
-    </style>
+  <!--[if lt IE 9]>
+  <script src="lib/js/html5shiv.js"></script>
+  <
+  ![endif]-->
+  <style>
+  .reveal .slides{
+    text-align: left;
+  }
 
-    </head>
+  .reveal h2{
+    margin-bottom: 50px;
+  }
+  .reveal .footer{
+    font-size: 10px;
+  }
+  rect {
+    pointer-events: all;
+  }
 
-    <body>
 
-      <div class="reveal">
+  .cursor {
+    fill: none;
+    stroke: brown;
+    pointer-events: none;
+  }
 
-        <div class="slides">
+  .link {
+    stroke: #999;
+  }
 
-          <section data-markdown>
-          <script type="text/template">
-            # D3.js ( & sons )
-            #### Matthieu Simonin
+  .node {
+    z-index:1;
+  }
+  #title {
+  }
 
-            * [intro](intro.html)
-            * [tutorial](d3js.html)
+  #pie {
+    width: 300px;
+    height:300px;
+    float:left;
+  }
+  #graph {
+    width: 300px;
+    height:300px;
+    float:left;
+  }
+  #bar {
+    width:300px;
+    height:300px;
+    float:left;
+  }
+  .raw {
+    width:100%;
+  }
+  #rawtext {
+    font-size: 75%;
+  }
 
-          </script>
-          </section>
+  .discreteBar {
+    fill: "black"
+  }
+  .nv-y text{
+    display: none;
+  }
 
+  .x-axis-label {
+    font-size: 15px;
+  }
+  .y-axis-label {
+    font-size: 15px;
+  }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="reveal">
+
+    <!-- Any section element inside of this container is displayed as a slide -->
+    <div class="slides">
+
+      <section>
+        <h1>D3.js : the basics</h1>
+          <div class="footer">
+
+            <img src="images/ccbync.png">
+            <p>
+            This tutorial is licensed under Creative Commons Attribution - NoCommercial 4.0 International.
+          </p>
+
+
+        <div>
+      </section>
+
+      <section>
+        <h2>Get started with the tutorial</h2>
+        <ul>
+          <li>Download the archive</li>
+          <li>Extract it and cd inside</li>
+          <li>Start a local web server :
+            <ul>
+              <li><code>python -m SimpleHTTPServer # python 2</code></li>
+              <li><code>python -m http.server # python 3</code></li>
+            </ul>
+          </li>
+          <li>Browse to http://localhost:8000</li>
+        </ul>
+      </section>
+
+      <section>
+        <h1>Outline</h1>
+        <ul>
+          <li>What is D3 ?</li>
+          <li>D3 and the HTML / javascript stack</li>
+          <li>Get started with d3</li>
+          <p style='font-style:italic'>
+              >> <a href="tutos/handson1/index.html" target="_blank">Hands-on 1 : 10 circles with transition</a>
+          <p>
+          <li>Data joins</li>
+          <p style='font-style:italic'>
+            >> <a href="tutos/handson2/index.html" target="_blank">Hands-on 2 : Animating 3 little bars</a>
+          <p>
+          <li>Scales</li>
+          <li>Axis</li>
+          <li>Interactions</li>
+          <p style='font-style:italic'>
+              >> <a href="tutos/handson3/index.html" target="_blank">Hands-on 3 : A real-life interactive visualization</a>
+          <p>
+        </ul>
+      </section>
+
+      <section>
+        <section>
+          <h1>What is D3 ?</h1>
+
+          <ul>
+            <li>D3 = Data Driven Document - <a href="http://d3js.org/">http://d3js.org/</a></li>
+            <li>Javascript visualization library</li>
+            <li>Created in 2011 by <a href="https://bost.ocks.org/mike/">Mike Bostock</a></li>
+            <li>Intensively used by the New york Times</li>
+          </ul>
+
+        </section>
+
+        <section>
+          <h2>D3</h2>
+          Is not a charting library
+        </section>
+
+        <section>
+          <ul>
+            <li>Pletoric use cases / example :
+            <ul>
+              <li><a href="http://bl.ocks.org/mbostock">http://bl.ocks.org/mbostock</a></li>
+              <li><a href="http://christopheviau.com/d3list/gallery.html">http://christopheviau.com/d3list/gallery.html</a></li>
+              <li><a href="http://blockbuilder.org/">blockbuilder.com</a></li>
+            </ul>
+            </li>
+            </ul>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>D3 in the HTML/javascript stack</h1>
+        </section>
+
+        <section>
+          <h2>The HTML Document Object Model (DOM)</h2>
+          static HTML
+          <img style="border:none;" width="100%" src="/images/html0.png"/>
+        </section>
+
+        <section>
+          <h2>The HTML Document Object Model (DOM)</h2>
+          HTML + javascript = dynamic HTML
+          <img style="border:none;" width="100%" src="/images/html1.png"/>
+      </section>
+
+        <section>
+          <h2>The HTML Document Object Model (DOM)</h2>
+          HTML + javascript + D3 = dynamic HTML with higher level manipulation
+          <img style="border:none;" width="100%" src="/images/html2.png"/>
+        </section>
+      </section>
+
+      <section>
+        <section>
+          <h1>Get started</h1>
+          <h2>DOM and SVG manipulations</h2>
+        </section>
+<section>
+  <h2>D3.js DOM manipulation</h2>
+
+  Key functions :
+  <pre><code>
+selection  : d3.select('{selector}') / d3.selectAll('{selector}')
+insertion  : {selection}.append('tag')
+attribute  : {selection}.attr("attr", value)
+style      : {selection}.style("key", "value")
+removal    : {selection}.remove()
+  </pre></code>
+  >> <a href="tutos/tuto1/index.html" target="_blank">First manipulations using D3</a>
+
+</section>
+
+<section>
+  <h2>D3.js SVG manipulation</h2>
+  <p>
+    <a href="http://www.w3.org/TR/SVG/shapes.html">Basic shapes</a>
+  </p>
+  <div>
+    <svg height='110px' width="100%">
+<circle cx="50" cy="50" r="10" stroke="black" stroke-width="3" fill="red" opacity="0.1" />
+<circle cx="100" cy="50" r="20" stroke="black" stroke-width="3" fill="red" opacity="0.5" />
+<circle cx="160" cy="50" r="25" stroke="black" stroke-width="3" fill="red" opacity="0.7" />
+<circle cx="200" cy="50" r="40" stroke="black" stroke-width="3" fill="red" opacity="1"/>
+<rect x="350" y="30" width="20" height="20" style="fill:blue;stroke:pink;stroke-width:1;opacity:0.1" />
+<rect x="400" y="50" width="50" height="75" style="fill:blue;stroke:pink;stroke-width:1;opacity:0.5" />
+<rect x="450" y="0" width="100" height="100" style="fill:blue;stroke:pink;stroke-width:1;opacity:1" />
+<line x1="600" y1="10" x2="650" y2="50" style="stroke:rgb(255,0,0);stroke-width:2" />
+<line x1="600" y1="100" x2="800" y2="50" style="stroke:rgb(255,120,50);stroke-width:5" />
+    </svg>
+  </div>
+  <pre><code>&lt;svg height="110px" width="100%"&gt;
+    &lt;circle cx="100" cy="50" r="20" stroke="black" stroke-width="3" fill="red" opacity="0.5" /&gt;
+    &lt;rect x="450" y="0" width="100" height="100" style="fill:blue;stroke:pink;stroke-width:1;opacity:1" /&gt;
+    &lt;line x1="600" y1="100" x2="800" y2="50" style="stroke:rgb(255,120,50);stroke-width:5" /&gt;
+&lt;/svg&gt;
+  </code></pre>
+  >> <a href="tutos/tuto11/index.html" target="_blank">SVG manipulations using D3</a>
+</section>
+
+<section id="slide-transition">
+  <h2>Transitions</h2>
+  <div class="container">
+    <svg height='110px' width="100%"></svg>
+    <script src="lib/slides/slide-transition.js"></script>
+  </div>
+  <br/>
+  <pre><code># interpolate radius from 10px to 20px
+d3.select('circle')
+  .attr("r", "10px")
+  .transition()
+  .attr("r", "20px");
+  </code></pre>
+
+    <pre><code># duration, delay and ease function can be added
+[...]
+.transition()
+.delay(500)
+.duration(1000)
+.ease("linear")
+.[...]
+    </code></pre>
+
+</section>
+<section>
+  <h2>Hands-on</h2>
+  <p>
+    >> <a href="tutos/handson1/index.html" target="_blank">Hands-on 1 : 10 circles with transition</a>
+    <br/>
+    <small>
+    (<a href="tutos/handson1/Rindex.html" target="_blank">Result</a>)
+    </small>
+  </p>
+</section>
+</section>
+
+
+<section>
+  <section>
+
+    <h1>3. Binding datas</h1>
+    <p>
+      Reddit question :
+      <q>
+        What was the defining moment you realized you had to create D3?
+      </q>
+    </p>
+    <p>
+      Mike Bostock :
+      <q>
+        The defining moment was when I got the
+        data-join working for the first time. It was magic. I wasn’t even sure I
+        understood how it worked, but it was a blast to use. I realized there could be a
+        practical tool for visualization that didn’t needlessly restrict the types of
+        visualizations you could make.  </q>
+      </p>
+
+
+    </section>
+
+    <section>
+      <h1>2. Binding datas</h1>
+      <h2> Part 1. The update selection</h2>
+      <h2> Part 2. The enter selection</h2>
+      <h2> Part 3. The remove selection</h2>
+      <h2> Part 4. Rebinding data</h2>
+    </h3>
+  </section>
+
+  <section id="slide-using-datas">
+    <h2> Part 1. The update selection</h2>
+    <div class="container">
+
+      <svg height="250px" width="100%">
+        <circle cx="40" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+        <circle cx="190" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+        <circle cx="340" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+        <circle cx="490" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+        <circle cx="630" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+        <text x="10" y="50"></text>
+        <text x="90" y="50"></text>
+        <text x="170" y="50"></text>
+        <text x="250" y="50"></text>
+        <text x="330" y="50"></text>
+      </svg>
+    </div>
+    <script src="lib/slides/slide-using-datas.js"></script>
+  </section>
+
+
+  <section>
+    <h2> Part 1. The update selection</h2>
+    <div class="container">
+
+      <div class=row"">
+        <div class=col-md-6>
+          <pre><code>&lt;body&gt;
+  &lt;div&gt;div1&lt;/div&gt;
+  &lt;div&gt;div2&lt;/div&gt;
+  &lt;div&gt;div3&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+          <pre><code>var myDatas = [1,2,3];
+var body = d3.select('body');
+var updateSel = body.selectAll(&quot;div&quot;)
+.data(myDatas);
+          </code></pre>
+          >> <a href="tutos/tuto2/index.html" target="_blank">example</a>
+        </div>
+
+        <div class=col-md-6>
+          <img src="images/binding.png" style="border:none"/>
+          <small>datas are bound through the __data__ property.</small>
+        </div>
+
+      </div>
+    </section>
+
+
+    <section>
+      <h2> Part 1. The update selection</h2>
+      Using the datas
+      <div class="row">
+        <div class="col-md-8">
+          <pre><code>
+&lt;body&gt;
+  &lt;div&gt;div1&lt;/div&gt;
+  &lt;div&gt;div2&lt;/div&gt;
+  &lt;div&gt;div3&lt;/div&gt;
+&lt;/body&gt;
+          </code></pre>
+          <pre><code>
+var myDatas = [1,2,3];
+var body = d3.select('body');
+
+// get the update selection
+var updateSel = body.selectAll(&quot;div&quot;)
+.data(myDatas)
+
+//update existing div
+updateSel.text(function(d, i) {
+  // for debug purpose
+  console.log(d);
+  console.log(i);
+  // return value (string)
+  return i + ',' + d;
+});
+          </code></pre>
+          >> <a href="tutos/tuto22/index.html" target="_blank">example</a>
+        </div>
+        <div class="col-md-4">
+          <img src="images/binding2.png" style="border:none">
         </div>
       </div>
+    </section>
+
+    <section>
+      <h1>2. Binding datas</h1>
+      <h2> Part 2. The enter selection</h2>
+    </section>
+
+    <section id="slide-extra-datas">
+      <h2> Part 2. The enter selection</h2>
+      <div class="container">
+        <svg height="250px" width="100%">
+          <g id="circle-group-extra">
+            <circle cx="40" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+            <circle cx="190" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+            <circle cx="340" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+          </g>
+          <g id="text-group-extra">
+            <text x="10" y="50"></text>
+            <text x="90" y="50"></text>
+            <text x="170" y="50"></text>
+            <text x="250" y="50"></text>
+            <text x="330" y="50"></text>
+          </g>
+        </svg>
+      </div>
+      <script src="lib/slides/slide-extra-datas.js"></script>
+    </section>
+
+    <section>
+      <h2> Part 2. The enter selection</h2>
+
+      <pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      <pre><code>var myDatas = [1,2,3,4,5];
+var container = d3.select(&quot;.container&quot;);
+
+// get the update selection
+var updateSel = container.selectAll(&quot;div&quot;)
+.data(myDatas);
+
+//update existing div
+updateSel.text(function(d, i) {
+  return i + ',' + d;
+});
+
+// add new divs
+var newElements = updateSel.enter()
+.append(&quot;div&quot;)
+.text(function(d,i) {
+  return i + ',' + d;
+});</code></pre>
+      >> <a href="tutos/tuto23/index.html" target="_blank">example</a>
+    </section>
+
+    <section>
+      <h2> Part 2. The enter selection</h2>
+      Refactoring the code.
+      <pre><code>&lt;div class=&quot;container&quot;&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+  &lt;div&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      <pre><code>var myDatas = [1,2,3,4,5];
+var container = d3.select(&quot;.container&quot;);
+
+// get the update selection
+var updateSel = container.selectAll(&quot;div&quot;)
+.data(myDatas);
+
+// add new divs
+var newElements = updateSel.enter()
+.append(&quot;div&quot;)
+
+//update existing div
+// it now includes the new divs
+updateSel.text(function(d, i) {
+  return i + ',' + d;
+});
+
+</code></pre>
+
+    </section>
+
+    <section id="slide-binding-from-scratch">
+      <h2> Part 2 (bis). Binding from scratch</h2>
+      <div class="container">
+        <svg height="250px" width="100%">
+          <g id="circle-group-scratch"></g>
+        </svg>
+      </div>
+      <script src="lib/slides/slide-binding-from-scratch.js"></script>
+    </section>
+
+    <section>
+      <h2> Part 2 (bis). Binding from scratch</h2>
+      <div class="row">
+        <div class="col-md-8">
+          <pre><code>&lt;div class=&quot;container&quot;&gt;
+&lt;/div&gt;
+          </code></pre>
+          <pre><code>
+var myDatas = [1,2,3];
+var container = d3.select(".container");
+container.selectAll(&quot;div&quot;)
+.data(myDatas)
+.enter()
+.append(&quot;div&quot;)
+.text(function(d,i) {
+  return i + ',' + d;
+});
+          </code></pre>
+
+        </div>
+        <div class="col-md-4">
+          <img src="images/binding2.png" style="border:none">
+        </div>
+      </div>
+    </section>
+
+    <section id="slide-remove-datas">
+      <h2> Part 3. The exit selection</h2>
+
+      <div class="container">
+        <svg height="250px" width="100%">
+          <g id="circle-group-extra">
+            <circle cx="40" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+            <circle cx="190" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+            <circle cx="340" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+            <circle cx="490" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+            <circle cx="640" cy="150" r="10" stroke="black" stroke-width="1" fill="red" opacity="1" />
+          </g>
+          <g id="text-group-extra">
+            <text x="10" y="50"></text>
+            <text x="90" y="50"></text>
+            <text x="170" y="50"></text>
+          </g>
+        </svg>
+      </div>
+      <script src="lib/slides/slide-remove-datas.js"></script>
+    </section>
+
+    <section>
+      <h1>3. Binding datas</h1>
+      <h2>Sum up</h2>
+
+      <pre><code>{selection}.data(myDatas)</code></pre>
+
+      Returns the <b>update</b> selection.
+
+      <pre><code>{selection}.data(myData).enter()</code></pre>
+      Returns the <b>enter</b> selection : placeholders for missing elements
+
+      <pre><code>{selection}.data(myData).exit()</code></pre>
+      Returns the <b>exit</b> selection : selection of extra elements
+    </section>
+
+    <section>
+      <h2> Part 4. Rebinding data</h2>
+      <div>
+          <pre><code>//step 1
+datas = [{id:0, value:20}, {id:1, value:40}];
+svg.selectAll('circle').data(datas).[...];
+//step 2
+datas = [{id:1, value:20}, {id:0, value:40}];
+svg.selectAll('circle').data(datas).[...];
+          </code></pre>
+      </div>
+      <div id="slide-binding-key-function">
+        <div class="container">
+          <svg height="250px" width="100%">
+            <g id="circle-group-binding-key-function">
+            </g>
+            <g id="text-group-binding-key-function">
+            </g>
+          </svg>
+        </div>
+      </div>
+      <script src="lib/slides/slide-binding-key-function.js"></script>
+
+    </section>
+
+    <section>
+      <h2> Part 4. Rebinding data</h2>
+      <pre><code>//step 1
+datas = [{id:0, value:20}, {id:1, value:40}];
+svg.selectAll('circle').data(datas, function(d){return d.id}).[...];
+//step 2
+datas = [{id:1, value:20}, {id:0, value:40}];
+svg.selectAll('circle').data(datas, function(d){return d.id}).[...];
+      </code></pre>
+      <div id="slide-binding-key-function1">
+        <div class="container">
+          <svg height="250px" width="100%">
+            <g id="circle-group-binding-key-function1">
+            </g>
+            <g id="text-group-binding-key-function1">
+            </g>
+          </svg>
+        </div>
+      </div>
+      <script src="lib/slides/slide-binding-key-function1.js"></script>
+
+    </section>
+
+    <section>
+      <h2>Hands on</h2>
+      <p>
+        >> <a href="tutos/handson2/index.html" target="_blank">Hands-on 2 : Animating 3 little bars</a>
+      </p>
+      <p>
+        <small>
+          (<a href="tutos/handson2/Rindex.html" target="_blank">Result</a>)
+        </small>
+      </p>
+    </section>
+
+  </section>
+
+  <section>
+    <section>
+      <h1> 3. Loading datas</h1>
+    </section>
+
+    <section>
+      <h2>Load datas in memory</h2>
+
+      <ul>
+        <li>Hard coded :</li>
+        <pre><code>
+var data = [1,2,3];
+// create visualization
+        </code></pre>
+        <li>Through asynchronous HTTP request : </li>
+        <pre style="width:100%"><code style="width:100%">
+d3.json("path/to/file.json", function(error, json) {
+  if (error) return console.warn(error);
+  data = json;
+  // create visualization
+});
+        </code></pre>
+      </ul>
+      <p>
+        >> Other requests : <a href="https://github.com/mbostock/d3/wiki/Requests#convenience-methods">https://github.com/mbostock/d3/wiki/Requests#convenience-methods </a>
+      </p>
+    </section>
+  </section>
+
+  <section>
+    <section>
+      <h1>4. Scales</h1>
+    </section>
+
+    <section>
+      <h2>4. scales</h2>
+      <p>
+        From the <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales">wiki</a> :
+      </p>
+      <p>
+        <q>Scales are functions that map from an input domain to an output range</q>
+      </p>
+      <br/>
+      Linear scale :
+      <pre><code>
+var linScale = d3.scale.linear().domain([0,10]).range([0,1000]);
+linScale(2.5); // return 250
+      </pre></code>
+      <p>
+        By default: domain and range are [0,1]
+      </p>
+      </section>
+      <section>
+        <h2>4. scales</h2>
+
+        Typical use case : draw svg elements in the screen coordinate system
+
+        <pre><code>var WIDTH = 500; // svg width
+var HEIGHT = 100;
+var datas = [1,20,10,5,30,25,40];
+var xScale = d3.scale.linear().domain([0, 42]).range([0,WIDTH]);
+var svg = d3.select('body')
+  .append('svg')
+  .attr('width', WIDTH)
+  .attr("height", HEIGHT);
+svg.selectAll('circle')
+   .data(datas)
+   .enter()
+   .append('circle')
+   .attr("cx", function(d){
+     return xScale(d)
+   .attr("cy", HEIGHT/2);
+})
+        </code></pre>
+        >> <a href="tutos/tuto_scale/linear.html" target="_blank">example</a>
+
+      </section>
+
+      <section>
+        <h2>4. scales</h2>
+        Polylinear scales :
+        <pre><code>
+var linScale = d3.scale.linear().domain([0,5,10]).range([0,800,500]);
+linScale(2.5); // returns 400
+        </pre></code>
+        Log scales :
+
+        <pre><code>
+var logScale = d3.scale.log().domain([1, Math.pow(10,6)]).range([0,6]);
+logScale(Math.pow(10,4)); // return 4
+        </code></pre>
+Typical use :
+        <pre><code>
+// map data to the screen.
+// WIDTH is the width of the enclosing svg
+[...]
+var datas = [10,40000,1000000,500,3000,2500,400];
+var xScale = d3.scale.log().domain([1, 1250000]).range([0,WIDTH]);
+[...]
+        </code></pre>
+        >> <a href="tutos/tuto_scale/log.html" target="_blank">example</a>
+        </section>
+
+        <section>
+          <h2>4. scales</h2>
+          SQRT scale
+          <p>
+          Typical use: data represented as 2D-shape :  keep surfaces proportionnal
+        </p>
+          <pre><code>var datas = [0.5, 1];
+var rScale = d3.scale.sqrt().range([0,50]);
+var rLinScale = d3.scale.linear().range([0,50]);
+[...]
+          </code></pre>
+          <div id="slide-sqrt-scale">
+            <div class="container">
+              <svg height="250px" width="100%">
+              </svg>
+            </div>
+          </div>
+          <script src="lib/slides/slide-sqrt-scale.js"></script>
+
+        </section>
+
+        <section>
+        <h2>4. scales</h2>
+        <p>
+
+        </p>
+        Ordinal scales
+        <pre><code>
+// other scales
+var ordScale = d3.scale.ordinal().domain([0,1,2,3,4]).range(["red", "blue", "green", "black", "#f24312"]);
+ordScale(2); // returns "green"
+// interpolate colors
+var colorScale = d3.scale.linear().domain([0,10]).range(["blue", "red"]);
+// colorScale(5); // returns a color between "blue" and "red";
+// predefined color category
+var colors = d3.scale.category10();
+colors.range(); // return 10 colors : ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf"]
+      </code></pre>
+      Other scales - see <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales">wiki</a>
+    </section>
+    <!-- <section>
+      <h2>4. scales</h2>
+      Utility functions (selection from the  <a href="https://github.com/mbostock/d3/wiki/Quantitative-Scales">wiki</a>)
+      <ul>
+        <li></li>
+      </ul>
+    </section> -->
+  </section>
+  <section>
+    <section>
+      <h1>5. Axis</h1>
+
+    </section>
+
+    <section>
+      <h2>5. Axis</h1>
+      <p>
+        For a given scale, the d3 axis component generate all the svg elements needed to draw the axis (a line, ticks, numbers ...) see <a href="https://github.com/mbostock/d3/wiki/SVG-Axes">wiki</a>.</p>
+        <br/>
+        <pre><code>
+var linScale=d3.scale.linear().domain([0,1]).range([0,500]);
+var xAxis = d3.svg.axis().scale(linScale);
+var svg = d3.select('body').append('svg').attr("width", 300).attr("height", 500);
+//axis will be on the top of the screen
+svg.append("g").call(xAxis);
+// we often need to translate down the x axis
+svg.append("g").attr("transform", "translate(0,100)").call(xAxis);
+        </code></pre>
+        >> <a href="tutos/tuto_axis/index.html" target="_blank">example</a>
+      </section>
+
+    </section>
+
+    <section>
+      <section>
+        <h1>6. Interactions</h1>
+      </section>
+
+      <section>
+        <h2>6. Interactions</h1>
+
+        Add event listeners.
+        <div id="slide-event">
+          <div class="container">
+            <svg height="150px" width="100%">
+            </svg>
+          </div>
+        </div>
+        <script src="lib/slides/slide-event.js"></script>
+      </section>
+
+      <section>
+        <h2>6. Interactions</h1>
+
+        Add event listeners.
+        <pre><code>{selection}.on('mouseover', function(d) {
+  // do something
+})
+.on('mouseout', function(d) {
+  // do something
+})
+        </code></pre>
+        List of supported event :
+        <a href='https://developer.mozilla.org/en-US/docs/Web/Events#Standard_events'>https://developer.mozilla.org/en-US/docs/Web/Events#Standard_events</a>
+      </section>
+
+      <section>
+        <h2>6. Interactions</h1>
+
+        Access the event
+        <div id="slide-event2">
+          <div class="container">
+            <svg height="150px" width="100%">
+            </svg>
+          </div>
+        </div>
+        <pre><code>{selection}.on('mouseover', function(d){
+  // raw event
+  console.log(d3.event);
+  // local coordinate where the event has been fired
+  console.log(d3.mouse(this));
+})</code></pre>
+  d3.touch and d3.touches are available as well : <a href="https://github.com/mbostock/d3/wiki/Selections#d3_mouse" target="_blank">https://github.com/mbostock/d3/wiki/Selections#d3_mouse</a>
+        <script src="lib/slides/slide-event2.js"></script>
+      </section>
+
+    </section>
 
 
-      <script src="lib/revealjs/lib/js/head.min.js"></script>
-      <script src="lib/revealjs/js/reveal.min.js"></script>
+    <section>
+      <h2>Hands-on</h2>
+      <p>
+        >> <a href="tutos/handson3/index.html" target="_blank">Hands-on 3 : A real-life interactive visualization</a>
+        <br/>
+        <small>
+        (<a href="tutos/handson3/Rindex.html" target="_blank">Result</a>)
+        <br/>
+        (<a href="tutos/handson3/Rindex_play.html" target="_blank">Result animated</a>)
+        </small>
 
-      <script>
+      </p>
+    </section>
 
-        Reveal.initialize({
-          controls: true,
-          progress: true,
-          history: true,
-          center: true,
-          loop: true,
-          theme: Reveal.getQueryHash().theme,
-          transition: 'linear',
-          margin: 0,
+    <script src="lib/revealjs/lib/js/head.min.js"></script>
+    <script src="lib/revealjs/js/reveal.min.js"></script>
 
-          dependencies: [
-          { src: 'lib/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: 'lib/revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'lib/revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
-          { src: 'lib/revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
-          { src: 'lib/revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
-          { src: 'lib/revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
-          ]
-        });
-      </script>
+    <script>
 
-    </body>
+    Reveal.initialize({
+      controls: true,
+      progress: true,
+      history: true,
+      center: true,
+      loop: true,
+      theme: Reveal.getQueryHash().theme,
+      transition: 'linear',
+      margin: 0,
+
+      dependencies: [
+        { src: 'lib/revealjs/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+        { src: 'lib/revealjs/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'lib/revealjs/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+        { src: 'lib/revealjs/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+        { src: 'lib/revealjs/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+        { src: 'lib/revealjs/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+      ]
+    });
+    </script>
+
+  </body>
   </html>

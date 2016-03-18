@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>D3js</title>
+  <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+  <style>
+  .axis text {
+    font: 10px sans-serif;
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  </style>
+</head>
+<body>
+  <div>
+  <h1>GDP and CO2</h1>
+  This is a scatter plot where each circle represents one country in 1980 where
+  <ul>
+    <li>The y-axis is the GDP per capita (log scale)</li>
+    <li>The x-axis is the CO2 produced per capita (log scale)</li>
+    <li>The radius of the circle represents the overall production of CO2</li>
+  </ul>
+  Goal : Make the graph looks great ! :
+  <ol>
+    <li>Assign colors to each circle</li>
+    <li>add x-axis and y-axis</li>
+    <li>Add some interactions with circles</li>
+    <li>Animate it ! from 1980 to 2010.</li>
+  </ol>
+  You can refer to one possible solution to give you an idea :
+  <a href="Rindex.html">static</a>
+  /
+  <a href="Rindex_play.html">animated</a>
+  </div>
+  <script type="text/javascript">
+  var margin = {top: 50, right: 50, bottom: 50, left: 50},
+  width = 600 - margin.left - margin.right,
+  height = 400 - margin.top - margin.bottom;
+
+
+  var svg = d3.select("body").append("svg")
+  // container for the whole graph (axis + scatter)
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.right + margin.bottom)
+  // container for the content
+  .append("g")
+  .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+  var xScale = d3.scale.log()
+  .domain([100, 50000])
+  .range([0, width]);
+
+  var yScale  = d3.scale.log()
+  .domain([1,58])
+  .range([height, 0]);
+
+  var rScale = d3.scale.sqrt()
+  .domain([0,4721171])
+  .range([0,30]);
+
+  var datas;
+  d3.csv('../../datas/data.csv', function(d){
+    datas = d;
+    console.log(datas);
+
+    var countries = datas.map(function(d){return d.county});
+
+    var updateSel = svg.selectAll("circle").data(datas);
+
+    updateSel.enter()
+    .append("circle")
+    .attr("cx", function(d){return xScale(d.gdppc1980)})
+    .attr("cy", function(d){return yScale(d.co2pc1980)})
+    .attr("r", function(d){return rScale(d.co21980)})
+
+  });
+
+  </script>
+</body>
+</html>

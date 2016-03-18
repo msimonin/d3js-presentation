@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3js</title>
+        <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+    </head>
+    <body>
+      <h1>Tuto 2 : Data binding</h1>
+      <p>
+        The data [1,2,3] is bound to the three divs.
+      </p>
+      <p>
+        The content of the div is updated with data and the index in the data array.
+      </p>
+      <div>div1</div>
+      <div>div2</div>
+      <div>div3</div>
+    </body>
+    <script type="text/javascript">
+      var myDatas = [1,2,3];
+      var body = d3.select('body');
+
+      // get the update selection
+      var updateSel = body.selectAll("div")
+        .data(myDatas)
+
+      //update existing div
+      updateSel.text(function(d, i) {
+          // for debug purpose
+          console.log(d);
+          console.log(i);
+          // return value (string)
+          return i + ',' + d;
+      }).style("font-size", function(d) {
+        return 10 * d + "px";
+      });
+    </script>
+
+</html>

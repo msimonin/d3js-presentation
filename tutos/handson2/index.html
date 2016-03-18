@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>D3js</title>
+  <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+</head>
+<body>
+  <h1>Hands-on 2 : Animating 3 little bars</h1>
+  Modify the source file to use D3 to get this behaviour :
+  <p>
+    When loading the page :
+    <ul>
+      <li>An array of data is generated : e.g [{id:0, height:207}, {id:1, height:134}, ...]</li>
+      <li>Such datas are bound to rects element whose height is set according the height value of the data</li>
+      <li>Calling oneStep() regenerate a new array of data and update the existing rect on the screen.</li>
+    </ul>
+    You can refer to one possible solution to give you an idea : <a href="Rindex.html">solution</a>
+  </p>
+  <ul>
+  </ul>
+<script type="text/javascript">
+  var NB = 3;
+  var WIDTH = 500;
+  var HEIGHT = 500;
+  var BAR_WIDTH = 50;
+  var BAR_MAX_HEIGHT = 200;
+
+  // The bar colors will be picked in this array
+  var colors = ["red", "green", "blue"];
+
+  // This generates a new array of data
+  function generate_new_data(){
+    var datas = [];
+    for (var i = 0; i < NB; i ++) {
+      datas.push({
+        id: i,
+        value: BAR_MAX_HEIGHT*Math.random()
+      });
+    }
+    return datas;
+  }
+
+  // create a svg element here
+
+  // draw the NB bars
+  oneStep()
+
+  function oneStep() {
+    // generate random data
+    var datas = generate_new_data();
+
+    // bind the datas and create and/or update existing bars
+
+  }
+
+
+</script>
+</body>
+</html>

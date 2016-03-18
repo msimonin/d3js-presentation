@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3js</title>
+        <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+    </head>
+    <body>
+      <h1>Hands-on 1 : DOM/SVG manipulations</h1>
+      Modify the source file to use D3 and get this behaviour :
+      <p>
+        When loading the page
+        <ul>
+          <li>a svg element is inserted in the DOM</li>
+          <li>10 circles appear </li>
+          <li>then, after some time, each of them is transitioned to a zero-radius circle</li>
+          <li>then, then after some time, each of them is removed from the DOM</li>
+        </ul>
+      </p>
+      <p>
+      Note : You'll use a for loop to generate the 10 circles. It's definitely
+      not a good practice with D3js (see data join section).
+      </p>
+
+    <script type="text/javascript">
+      var svg = d3.select('body')
+                  .append('svg')
+                  .attr('height', '500px')
+                  .attr('width', '500px');
+
+      for (var i = 0; i < 9 ; i ++) {
+        svg.append('circle')
+           .attr('cy', 100)
+           .attr('cx', 50 + 50 * i)
+           .attr('r', 10+2*i)
+           .style('fill', "orange")
+      }
+
+      d3.selectAll('circle')
+        .transition()
+        .delay(1000)
+        .duration(1000)
+        .ease('bounce')
+        .attr('r', 0)
+        .remove()
+
+
+    </script>
+  </body>
+</html>

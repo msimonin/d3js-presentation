@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>D3js</title>
+  <script type="text/javascript" src="/lib/d3/d3.min.js"></script>
+</head>
+<body>
+
+<script type="text/javascript">
+  var NB = 3;
+  var WIDTH = 500;
+  var HEIGHT = 500;
+  var BAR_WIDTH = 50;
+  var BAR_MAX_HEIGHT = 200;
+
+  var svg = d3.select('body')
+    .append('svg')
+    .attr("width", WIDTH)
+    .attr("height", HEIGHT);
+
+  // This generates a new array of data
+  function generate_new_data(){
+    var datas = [];
+    for (var i = 0; i < NB; i ++) {
+      datas.push({
+        id: i,
+        value: BAR_MAX_HEIGHT*Math.random()
+      });
+    }
+    return datas;
+  }
+  var colors = ["red", "green", "blue"];
+
+  oneStep()
+
+  function oneStep() {
+    var datas = generate_new_data();
+
+    var updateSel = svg.selectAll("rect").data(datas);
+
+    updateSel.enter()
+      .append("rect")
+      .attr("x", function(d,i) {return i * BAR_WIDTH;})
+      .attr("y", 0)
+      .style("fill", function(d, i){return colors[i % NB]})
+      .attr("width", BAR_WIDTH)
+      .attr("height", 0)
+
+      //update existing rect
+      updateSel
+      .transition()
+      .ease("linear")
+      .attr("height", function(d) {return d.value;})
+    }
+
+
+</script>
+</body>
+</html>

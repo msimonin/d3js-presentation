@@ -80,6 +80,7 @@
 
         <script>
       $(document).keypress(function(ev) {
+        console.log(ev.which);
         var indices = Reveal.getIndices();
         var toSlick = undefined;
 
@@ -96,7 +97,7 @@
           toSlick.slickNext();
         }
         if (ev.which === 231 ){
-          toSlick.slickPrev();         
+          toSlick.slickPrev();
         }
       });
         </script>
@@ -112,9 +113,11 @@
         <section data-markdown>
         <script type="text/template">
           # D3.js ( & sons )
-
-          #### Matthieu Simonin
         </script>
+        </section>
+
+        <section>
+        Data driven document
         </section>
 
         <section>
@@ -134,15 +137,8 @@
         </section>
         <section>
         <h2>One example</h2>
-        <a href="http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html">Four Ways to Slice Obama’s 2013 Budget Proposal</a>
-         </section>
-
-         <section>
-            <img src="images/murray.png" height="500"/>
-            <img src="images/chambers.png" height="500"/>
-         </section>
-
-
+         <a href="http://www.nytimes.com/interactive/2012/02/13/us/politics/2013-budget-proposal-graphic.html">Four Ways to Slice Obama’s 2013 Budget Proposal</a>
+        </section>
         </section>
 
         <section>
@@ -165,7 +161,7 @@
               <h2>D3.js pros</h2>
               In a scientific (or not) context : </br>
               Explanatory visualization : <br/>
-              <ul> 
+              <ul>
                 <li><a href="http://andrewyuan.github.io/EDAV-project.html">WC2014</a></li>
                 <li><a href="http://bl.ocks.org/mbostock/dbb02448b0f93e4c82c3">Poisson disc</a></li>
               </ul>
@@ -197,8 +193,8 @@
         <section data-markdown>
         <script type="text/template">
           # D3.js cons
-          
-          - No predefined visualization 
+
+          - No predefined visualization
           - No backward compatibility
           - "Low" level
           - Size of the input
@@ -213,12 +209,12 @@
         <section>
         <h1>Sons of D3.js *</h1>
         <h5>*  not exhaustive</h5>
-        
+
         <ul>
           <li>Reusable charts : <a href="http://nvd3.org/">nvd3</a></li>
-          <li>Exploratory and multidimensional visualization : <a href="http://dc-js.github.io/dc.js/">dc.js</a></li>  
+          <li>Exploratory and multidimensional visualization : <a href="http://dc-js.github.io/dc.js/">dc.js</a></li>
         </ul>
-        
+
         <div id="dc">
 		      <div class="row">
             <div id="fluctuation-chart"><small>Submission time</small><br/></div>
@@ -244,12 +240,12 @@
         <script type="text/template">
           # Tutorial
 
-          ## d3.js : [the basics](d3js.html)
-          
+          ## d3.js : the basics
+
         </script>
         </section>
 
-        </section>
+                </section>
 
 
         <script src="lib/revealjs/lib/js/head.min.js"></script>

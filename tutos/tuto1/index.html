@@ -7,21 +7,25 @@
     </head>
     <body>
       <h1>Tuto 1 : DOM/SVG manipulations</h1>
-      <div class="container">
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-
-      <script type="text/javascript">
-        var linScale=d3.scale.linear().domain([0,1]).range([0,300]);
-        var xAxis = d3.svg.axis().scale(linScale).orient("top");
-        var svg = d3.select('body').append('svg').attr("width", 300).attr("height", 500);
-        //axis on the top of the screen
-        svg.append("g").attr("class","xAxis").call(xAxis);
-        //translate axis
-        svg.append("g").attr("class","xAxis").attr("transform", "translate(0,100)").call(xAxis);
-
-      </script>
+      Open your browser console and manipulate (refresh to recover the initial state):
+      <ul>
+        <li>d3.select("body");</li>
+        <li>d3.select("body").style("background-color", "red");</li>
+        <li>d3.select("body").append("div").text("new div1").append("div").text("new div2");</li>
+        <li>d3.select("div").style("border", "1px solid blue");</li>
+        <li>d3.selectAll("div").style("font-weight", "bold");</li>
+        <li>d3.selectAll('.class1').style("color", "red");</li>
+        <li>d3.select("div").remove();</li>
+        <li>d3.selectAll('.class1').style("color", "red");</li>
+        <li>d3.selectAll('#id1').text("div with id1");</li>
+      </ul>
+      <hr/>
+      <div id="id1" class="class1">div1</div>
+      <div class="class1">div2</div>
+      <div class="class2">div3</div>
     </body>
+    <script type="text/javascript">
+      // Javascript and D3js code here
+    </script>
+
 </html>

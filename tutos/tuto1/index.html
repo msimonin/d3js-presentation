@@ -14,22 +14,13 @@
       </div>
 
       <script type="text/javascript">
-        var myDatas = [1,2,3,4,5];
-        var container = d3.select(".container");
-        var updateSel = container.selectAll("div")
-        .data(myDatas);
-
-        //update existing div
-        updateSel.text(function(d, i) {
-            return i + ',' + d;
-            });
-
-// add new divs
-        var newElements = updateSel.enter()
-          .append("div")
-          .text(function(d,i) {
-              return i + ',' + d;
-            });
+        var linScale=d3.scale.linear().domain([0,1]).range([0,300]);
+        var xAxis = d3.svg.axis().scale(linScale).orient("top");
+        var svg = d3.select('body').append('svg').attr("width", 300).attr("height", 500);
+        //axis on the top of the screen
+        svg.append("g").attr("class","xAxis").call(xAxis);
+        //translate axis
+        svg.append("g").attr("class","xAxis").attr("transform", "translate(0,100)").call(xAxis);
 
       </script>
     </body>

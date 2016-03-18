@@ -88,6 +88,7 @@
             .attr("height", 0)
             .attr("fill", "green")
             .on("mouseover", function(d){ d3.select(".tooltip").text(d.nom_reel + " : " + d.population_2010)  })
+            .on("mouseout", function(d){ d3.select(".tooltip").text("")  })
             .transition()
             .delay(function(d,i){return 25*i})
             .attr("y", function(d,i){return h - yScale(d.population_2010)})

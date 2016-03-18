@@ -5,6 +5,7 @@
     <title>D3.js</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" id="theme">
     <link rel="stylesheet" href="lib/revealjs/css/reveal.min.css">
+    <!-- <link rel="stylesheet" href="lib/revealjs/css/print/pdf.css"> -->
     <link rel="stylesheet" href="lib/revealjs/css/theme/beige.css" id="theme">
     <!-- For syntax highlighting -->
     <link rel="stylesheet" href="lib/revealjs/lib/css/zenburn.css">
@@ -100,6 +101,10 @@
 
         <section>
         <h1>D3.js : the basics</h1>
+        <h4>Matthieu Simonin</h4>
+        <br/>
+        <br/>
+        <a href="https://github.com/msimonin/d3js-presentation">https://github.com/msimonin/d3js-presentation</a>
         </section>
 
         <section>
@@ -520,7 +525,7 @@ container.selectAll(&quot;div&quot;)
                   <pre><code>
 var linScale = d3.scale.linear().domain([0,1]).range([0,500]);
 linScale(0.5); // return 250
-var logScale = d3.scale.linear().domain([1, Math.pow(10,6)]);
+var logScale = d3.scale.log().domain([1, Math.pow(10,6)]);
 logScale(Math.pow(10,4)); // return 4
               </code></pre>
 

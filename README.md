@@ -1,6 +1,6 @@
 # D3js Tutorial - The Basics
 
-Launch your favoite micro web server : 
+Launch your favorite micro web server : 
 
 * Python 2.7 : ```python -m SimpleHTTPServer```
 * Python 3   :  ```python -m http.server```

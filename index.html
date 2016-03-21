@@ -22,9 +22,12 @@
   <
   ![endif]-->
   <style>
+
+
   .reveal .slides{
     text-align: left;
   }
+
 
   .reveal h2{
     margin-bottom: 50px;
@@ -187,20 +190,21 @@
 
         <section>
           <h2>The HTML Document Object Model (DOM)</h2>
+          <p>
           static HTML
-          <img style="border:none;" width="100%" src="/images/html0.png"/>
+          </p>
+          <img style="border:none;" src="/images/html0.png"/>
         </section>
 
         <section>
           <h2>The HTML Document Object Model (DOM)</h2>
-          HTML + javascript = dynamic HTML
           <img style="border:none;" width="100%" src="/images/html1.png"/>
+
       </section>
 
         <section>
           <h2>The HTML Document Object Model (DOM)</h2>
-          HTML + javascript + D3 = dynamic HTML with higher level manipulation
-          <img style="border:none;" width="100%" src="/images/html2.png"/>
+          <img style="border:none;" width="80%" src="/images/html2.png"/>
         </section>
       </section>
 
@@ -345,22 +349,24 @@ d3.select('circle')
     <h2> Part 1. The update selection</h2>
     <div class="container">
 
-      <div class=row"">
-        <div class=col-md-6>
-          <pre><code>&lt;body&gt;
+      <div class="row">
+        <div class="col-md-6 col-sm-6">
+          <pre><code  data-trim>
+&lt;div class="container"&gt;
   &lt;div&gt;div1&lt;/div&gt;
   &lt;div&gt;div2&lt;/div&gt;
   &lt;div&gt;div3&lt;/div&gt;
-&lt;/body&gt;</code></pre>
-          <pre><code>var myDatas = [1,2,3];
-var body = d3.select('body');
-var updateSel = body.selectAll(&quot;div&quot;)
+&lt;/div&gt;
+</code></pre>
+          <pre><code class="javascript">var myDatas = [1,2,3];
+var container = d3.select('container');
+var updateSel = container.selectAll(&quot;div&quot;)
 .data(myDatas);
           </code></pre>
           >> <a href="tutos/tuto2/index.html" target="_blank">example</a>
         </div>
 
-        <div class=col-md-6>
+        <div class="col-md-6 col-sm-6">
           <img src="images/binding.png" style="border:none"/>
           <small>datas are bound through the __data__ property.</small>
         </div>
@@ -373,22 +379,17 @@ var updateSel = body.selectAll(&quot;div&quot;)
       <h2> Part 1. The update selection</h2>
       Using the datas
       <div class="row">
-        <div class="col-md-8">
-          <pre><code>
-&lt;body&gt;
+        <div class="col-md-8 col-sm-8">
+          <pre><code>&lt;body&gt;
   &lt;div&gt;div1&lt;/div&gt;
   &lt;div&gt;div2&lt;/div&gt;
   &lt;div&gt;div3&lt;/div&gt;
-&lt;/body&gt;
-          </code></pre>
-          <pre><code>
-var myDatas = [1,2,3];
+&lt;/body&gt;</code></pre>
+          <pre><code>var myDatas = [1,2,3];
 var body = d3.select('body');
-
 // get the update selection
 var updateSel = body.selectAll(&quot;div&quot;)
 .data(myDatas)
-
 //update existing div
 updateSel.text(function(d, i) {
   // for debug purpose
@@ -396,12 +397,11 @@ updateSel.text(function(d, i) {
   console.log(i);
   // return value (string)
   return i + ',' + d;
-});
-          </code></pre>
+});</code></pre>
           >> <a href="tutos/tuto22/index.html" target="_blank">example</a>
         </div>
-        <div class="col-md-4">
-          <img src="images/binding2.png" style="border:none">
+        <div class="col-md-4 col-sm-4">
+          <img width="80%" src="images/binding2.png" style="border:none">
         </div>
       </div>
     </section>
@@ -503,12 +503,12 @@ updateSel.text(function(d, i) {
     <section>
       <h2> Part 2 (bis). Binding from scratch</h2>
       <div class="row">
-        <div class="col-md-8">
-          <pre><code>&lt;div class=&quot;container&quot;&gt;
+        <div class="col-md-8 col-sm-8">
+          <pre><code data-trim>
+&lt;div class=&quot;container&quot;&gt;
 &lt;/div&gt;
           </code></pre>
-          <pre><code>
-var myDatas = [1,2,3];
+          <pre><code data-trim>var myDatas = [1,2,3];
 var container = d3.select(".container");
 container.selectAll(&quot;div&quot;)
 .data(myDatas)
@@ -520,8 +520,8 @@ container.selectAll(&quot;div&quot;)
           </code></pre>
 
         </div>
-        <div class="col-md-4">
-          <img src="images/binding2.png" style="border:none">
+        <div class="col-md-4 col-sm-4">
+          <img width="100%" src="images/binding2.png" style="border:none">
         </div>
       </div>
     </section>
@@ -635,12 +635,12 @@ svg.selectAll('circle').data(datas, function(d){return d.id}).[...];
 
       <ul>
         <li>Hard coded :</li>
-        <pre><code>
+        <pre><code data-trim>
 var data = [1,2,3];
 // create visualization
         </code></pre>
         <li>Through asynchronous HTTP request : </li>
-        <pre style="width:100%"><code style="width:100%">
+        <pre style="width:100%"><code style="width:100%" data-trim>
 d3.json("path/to/file.json", function(error, json) {
   if (error) return console.warn(error);
   data = json;
@@ -669,7 +669,7 @@ d3.json("path/to/file.json", function(error, json) {
       </p>
       <br/>
       Linear scale :
-      <pre><code>
+      <pre><code data-trim>
 var linScale = d3.scale.linear().domain([0,10]).range([0,1000]);
 linScale(2.5); // return 250
       </pre></code>
@@ -682,7 +682,7 @@ linScale(2.5); // return 250
 
         Typical use case : draw svg elements in the screen coordinate system
 
-        <pre><code>var WIDTH = 500; // svg width
+        <pre><code data-trim>var WIDTH = 500; // svg width
 var HEIGHT = 100;
 var datas = [1,20,10,5,30,25,40];
 var xScale = d3.scale.linear().domain([0, 42]).range([0,WIDTH]);
@@ -706,18 +706,18 @@ svg.selectAll('circle')
       <section>
         <h2>4. scales</h2>
         Polylinear scales :
-        <pre><code>
+        <pre><code data-trim>
 var linScale = d3.scale.linear().domain([0,5,10]).range([0,800,500]);
 linScale(2.5); // returns 400
         </pre></code>
         Log scales :
 
-        <pre><code>
+        <pre><code data-trim>
 var logScale = d3.scale.log().domain([1, Math.pow(10,6)]).range([0,6]);
 logScale(Math.pow(10,4)); // return 4
         </code></pre>
 Typical use :
-        <pre><code>
+        <pre><code data-trim>
 // map data to the screen.
 // WIDTH is the width of the enclosing svg
 [...]
@@ -755,7 +755,7 @@ var rLinScale = d3.scale.linear().range([0,50]);
 
         </p>
         Ordinal scales
-        <pre><code>
+        <pre><code data-trim>
 // other scales
 var ordScale = d3.scale.ordinal().domain([0,1,2,3,4]).range(["red", "blue", "green", "black", "#f24312"]);
 ordScale(2); // returns "green"
@@ -787,7 +787,7 @@ colors.range(); // return 10 colors : ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728
       <p>
         For a given scale, the d3 axis component generate all the svg elements needed to draw the axis (a line, ticks, numbers ...) see <a href="https://github.com/mbostock/d3/wiki/SVG-Axes">wiki</a>.</p>
         <br/>
-        <pre><code>
+        <pre><code data-trim>
 var linScale=d3.scale.linear().domain([0,1]).range([0,500]);
 var xAxis = d3.svg.axis().scale(linScale);
 var svg = d3.select('body').append('svg').attr("width", 300).attr("height", 500);
